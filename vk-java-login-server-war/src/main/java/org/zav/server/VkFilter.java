@@ -13,10 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zav.auth.VkAuthentificator;
+import org.zav.auth.VkAuthentificatorValve;
 
 public class VkFilter implements Filter
 {
+   
+   private static final Logger LOG = LoggerFactory.getLogger(VkAuthentificatorValve.class);
 
    @Override
    public void destroy()
@@ -28,6 +33,8 @@ public class VkFilter implements Filter
    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException
    {
+      LOG.debug("Entering the method");
+      
       HttpServletResponse httpResponse = (HttpServletResponse)response;
       HttpServletRequest httpRequest = (HttpServletRequest)request;
 
