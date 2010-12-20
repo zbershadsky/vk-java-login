@@ -10,19 +10,23 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.deploy.LoginConfig;
 import org.apache.catalina.realm.GenericPrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VkAuthentificatorValve extends AuthenticatorBase
 {
 
+   private static final Logger LOG = LoggerFactory.getLogger(VkAuthentificatorValve.class);
+
    @Override
    protected boolean authenticate(Request request, Response response, LoginConfig loginConfig) throws IOException
    {
-      System.out.println(">>> alexey: VkAuthentificatorValve.authenticate 1 = " + 1);
+      LOG.debug("Entering the method");
 
       HttpServletRequest httpRequest = (HttpServletRequest)request;
 
       GenericPrincipal principal = (GenericPrincipal)VkAuthentificator.authenticate(httpRequest);
-      System.out.println(">>> alexey: VkAuthentificatorValve.authenticate principal = " + principal);
+      LOG.debug(" principal = " + principal);
       if (principal == null)
       {
          forwardToErrorPage(request, response, loginConfig);
@@ -43,7 +47,7 @@ public class VkAuthentificatorValve extends AuthenticatorBase
       }
       catch (Throwable t)
       {
-         //         log.warn("Unexpected error forwarding to error page", t);
+         LOG.warn("Unexpected error forwarding to error page", t);
       }
    }
 }

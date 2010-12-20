@@ -11,29 +11,34 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.zav.auth.VkAuthentificatorValve;
+
 public class VkServlet extends GenericServlet
 {
+
+   private static final Logger LOG = LoggerFactory.getLogger(VkAuthentificatorValve.class);
 
    @Override
    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException
    {
-      System.out.println("\n\n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-      System.out.println(">>> alexey: VkServlet.service 1 = " + 1);
+      LOG.debug("\n\n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      LOG.debug("Entering the method");
 
       HttpServletRequest httpRequest = (HttpServletRequest)req;
       String servletPath = httpRequest.getServletPath();
-      
-      Principal principal = httpRequest.getUserPrincipal();
-      System.out.println(">>> alexey: VkServlet.service principal = " + principal);
-      if (principal != null)
-         System.out.println(">>> alexey: VkServlet.service principal.getName() = " + principal.getName());
 
-      System.out.println(">>> alexey: VkServlet.service hReq.getRemoteUser() = " + httpRequest.getRemoteUser());
-      System.out.println(">>> alexey: VkServlet.service hReq.getUserPrincipal() = " + httpRequest.getUserPrincipal());
+      Principal principal = httpRequest.getUserPrincipal();
+      LOG.debug(" principal = " + principal);
+      if (principal != null)
+         LOG.debug(" principal.getName() = " + principal.getName());
+
+      LOG.debug(" hReq.getRemoteUser() = " + httpRequest.getRemoteUser());
+      LOG.debug(" hReq.getUserPrincipal() = " + httpRequest.getUserPrincipal());
       if (httpRequest.getUserPrincipal() != null)
-         System.out.println(">>> alexey: VkServlet.service hReq.getUserPrincipal().getName() = "
-            + httpRequest.getUserPrincipal().getName());
-      System.out.println(">>> alexey: VkServlet.service hReq.getSession(false) = " + httpRequest.getSession(false));
+         LOG.debug(" hReq.getUserPrincipal().getName() = " + httpRequest.getUserPrincipal().getName());
+      LOG.debug(" hReq.getSession(false) = " + httpRequest.getSession(false));
 
       printParsAndAttrs(httpRequest);
       printHeaders(httpRequest);
@@ -41,12 +46,12 @@ public class VkServlet extends GenericServlet
 
       if (servletPath.startsWith("/vk/private"))
       {
-         System.out.println(">>> alexey: VkServlet.service 2 = MAIN");
+         LOG.debug(" Go to the MAIN page");
          httpRequest.getRequestDispatcher("/main.jsp").include(req, res);
       }
       else
       {
-         System.out.println(">>> alexey: VkServlet.service 2 = INDEX");
+         LOG.debug(" Go to the INDEX page");
          httpRequest.getRequestDispatcher("/index.jsp").include(req, res);
       }
    }
@@ -57,15 +62,15 @@ public class VkServlet extends GenericServlet
       while (parameterNames.hasMoreElements())
       {
          String name = (String)parameterNames.nextElement();
-         System.out.println(">>> alexey: VkServlet.logParsAndAttrs P name = " + name);
-         System.out.println(">>> alexey: VkServlet.logParsAndAttrs        = " + req.getParameter(name));
+         LOG.info(">>> alexey: VkServlet.logParsAndAttrs P name = " + name);
+         LOG.info(">>> alexey: VkServlet.logParsAndAttrs        = " + req.getParameter(name));
       }
       Enumeration<String> attributeNames = req.getAttributeNames();
       while (attributeNames.hasMoreElements())
       {
          String name = (String)attributeNames.nextElement();
-         System.out.println(">>> alexey: VkServlet.logParsAndAttrs A name = " + name);
-         System.out.println(">>> alexey: VkServlet.logParsAndAttrs        = " + req.getAttribute(name));
+         LOG.info(">>> alexey: VkServlet.logParsAndAttrs A name = " + name);
+         LOG.info(">>> alexey: VkServlet.logParsAndAttrs        = " + req.getAttribute(name));
       }
    }
 
@@ -77,8 +82,8 @@ public class VkServlet extends GenericServlet
          while (headerNames.hasMoreElements())
          {
             String name = (String)headerNames.nextElement();
-            System.out.println(">>> alexey: VkServlet.printHeaders H name = " + name);
-            System.out.println(">>> alexey: VkServlet.printHeaders        = " + hReq.getHeader(name));
+            LOG.info(">>> alexey: VkServlet.printHeaders H name = " + name);
+            LOG.info(">>> alexey: VkServlet.printHeaders        = " + hReq.getHeader(name));
          }
       }
    }
@@ -90,8 +95,8 @@ public class VkServlet extends GenericServlet
       {
          for (Cookie cookie : cookies)
          {
-            System.out.println(">>> alexey: VkServlet.printCookies C name = " + cookie.getName());
-            System.out.println(">>> alexey: VkServlet.printCookies        = " + cookie.getValue());
+            LOG.info(">>> alexey: VkServlet.printCookies C name = " + cookie.getName());
+            LOG.info(">>> alexey: VkServlet.printCookies        = " + cookie.getValue());
          }
       }
    }

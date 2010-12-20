@@ -11,12 +11,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.catalina.realm.GenericPrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VkAuthentificator
 {
+   private static final Logger LOG = LoggerFactory.getLogger(VkAuthentificator.class);
 
    private static final String VK_APP_ID = "2045117";
-   
+
    private static final String VK_APP_SECRET = "4SlidEThakNkfVk9jUx5";
 
    private static final String VK_APP_COOKIE_NAME = "vk_app_" + VK_APP_ID;
@@ -54,14 +57,12 @@ public class VkAuthentificator
     */
    public static Principal authenticate(HttpServletRequest httpRequest)
    {
-      System.out.println(">>>>>>>>>>>>>>>>>>>>>> ");
-      System.out.println(">>> alexey: VkAuthentificator.authenticate 1 = " + 1);
-      System.out.println(">>> alexey: VkAuthentificator.authenticate httpRequest.getRequestURI() = "
-         + httpRequest.getRequestURI());
+      LOG.debug("Entering the method");
+      LOG.debug(" httpRequest.getRequestURI() = " + httpRequest.getRequestURI());
       Principal principal = httpRequest.getUserPrincipal();
-      System.out.println(">>> alexey: VkAuthentificator.authenticate principal = " + principal);
+      LOG.debug(" principal = " + principal);
       if (principal != null)
-         System.out.println(">>> alexey: VkAuthentificator.authenticate principal.getName() = " + principal.getName());
+         LOG.debug(" principal.getName() = " + principal.getName());
       // the authentication
       String mid = checkHash(httpRequest);
       if (mid != null)
@@ -89,7 +90,7 @@ public class VkAuthentificator
    public static String checkHash(HttpServletRequest httpRequest)
    {
       String cookieHeader = httpRequest.getHeader("cookie");
-      System.out.println(">>> alexey: VkAuthentificator.checkHash cookieHeader = " + cookieHeader);
+      LOG.debug(" cookieHeader = " + cookieHeader);
 
       if (cookieHeader == null)
          return null;
@@ -105,7 +106,7 @@ public class VkAuthentificator
             vkAppValue = cookie;
          }
       }
-      System.out.println(">>> alexey: VkAuthentificator.checkHash vkAppValue = " + vkAppValue);
+      LOG.debug(" vkAppValue = " + vkAppValue);
 
       if (vkAppValue == null)
          return null;
@@ -132,10 +133,10 @@ public class VkAuthentificator
 
       // get the client checksum
       String sig = map.get(COOKIE_PARAM_SIG);
-      System.out.println(">>> alexey: VkAuthentificator.checkHash sig = !!!!! = " + sig);
+      LOG.debug(" sig = !!!!! = " + sig);
       // get the user ID
       String mid = map.get(COOKIE_PARAM_MID);
-      System.out.println(">>> alexey: VkAuthentificator.checkHash mid = " + mid);
+      LOG.debug(" mid = " + mid);
 
       // create the control checksum
       byte[] mdbytes = md.digest(toHash.getBytes());
@@ -150,8 +151,8 @@ public class VkAuthentificator
       }
       String digest = hexString.toString();
 
-      System.out.println(">>> alexey: VkAuthentificator.checkHash digest = " + digest);
-      System.out.println(">>> alexey: VkAuthentificator.checkHash sig.equals(digest) = " + sig.equals(digest));
+      LOG.debug(" digest = " + digest);
+      LOG.debug(" sig.equals(digest) = " + sig.equals(digest));
       if (sig.equals(digest))
          return mid;
       else
@@ -166,7 +167,7 @@ public class VkAuthentificator
     */
    private static Map<String, String> parseVkAppValue(String vkAppValue)
    {
-      System.out.println(">>> alexey: VkAuthentificator.parseVkAppValue vkAppValue = " + vkAppValue);
+      LOG.debug(" vkAppValue = " + vkAppValue);
       if (vkAppValue == null || vkAppValue.length() == 0)
          return null;
       String[] vkAppValuesArray = vkAppValue.split("&");
@@ -174,7 +175,7 @@ public class VkAuthentificator
       Map<String, String> map = new HashMap<String, String>();
       for (String vkAppParam : vkAppValuesArray)
       {
-         System.out.println(">>> alexey: VkAuthentificator.parseVkAppValue vkAppParam = " + vkAppParam);
+         LOG.debug(" vkAppParam = " + vkAppParam);
          String[] splitted = vkAppParam.split("=");
          if (splitted.length > 1)
          {
