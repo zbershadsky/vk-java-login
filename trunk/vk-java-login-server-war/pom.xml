@@ -8,11 +8,11 @@
    </parent>
    <artifactId>vk-java-login-server-war</artifactId>
    <packaging>war</packaging>
-   <name>vk-java-login :: Server :: WAR</name>
+   <name>VK Java Login :: Server :: WAR</name>
    <dependencies>
       <dependency>
          <groupId>org.vk-java-login</groupId>
-         <artifactId>vk-java-login-vk-auth</artifactId>
+         <artifactId>vk-java-login-auth</artifactId>
          <version>1.0-SNAPSHOT</version>
       </dependency>
       <dependency>
