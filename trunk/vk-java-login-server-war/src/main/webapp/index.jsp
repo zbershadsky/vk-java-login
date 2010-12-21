@@ -1,4 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml"> 
+<%@page import="org.slf4j.Logger"%>
+<%@page import="org.slf4j.LoggerFactory"%>
+<% final Logger LOG = LoggerFactory.getLogger("index.jsp");%>
+<%LOG.debug("Entering...");%>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head> 
     <meta http-equiv="content-type" content="text/html; charset=windows-1251" /> 
     <title>Open API sample page</title> 
