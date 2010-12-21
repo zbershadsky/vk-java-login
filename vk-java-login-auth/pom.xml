@@ -8,7 +8,7 @@
    </parent>
    <artifactId>vk-java-login-auth</artifactId>
    <packaging>jar</packaging>
-   <name>vk-java-login :: VK auth</name>
+   <name>VK Java Login :: Auth</name>
    <dependencies>
       <dependency>
          <groupId>org.slf4j</groupId>

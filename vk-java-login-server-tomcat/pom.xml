@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.vk-java-login</groupId>
+      <artifactId>vk-java-login-parent</artifactId>
+      <version>1.0-SNAPSHOT</version>
+   </parent>
+   <artifactId>vk-java-login-server-tomcat</artifactId>
+   <name>VK Java Login :: Server :: Tomcat</name>
+   <dependencies>
+      <dependency>
+         <groupId>org.vk-java-login</groupId>
+         <artifactId>vk-java-login-server-war</artifactId>
+         <version>${project.version}</version>
+         <scope>runtime</scope>
+         <type>war</type>
+      </dependency>
+   </dependencies>
+   <profiles>
+      <profile>
+         <id>default</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+      </profile>
+      <profile>
+         <id>assembly</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <artifactId>maven-assembly-plugin</artifactId>
+                  <configuration>
+                     <descriptors>
+                        <descriptor>assembly-descriptor.xml</descriptor>
+                     </descriptors>
+                     <finalName>lib</finalName>
+                  </configuration>
+                  <executions>
+                     <execution>
+                        <phase>install</phase>
+                        <goals>
+                           <goal>assembly</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+               <plugin>
+                  <artifactId>maven-antrun-plugin</artifactId>
+                  <configuration>
+                     <tasks>
+                        <delete dir="${project.build.directory}/vk-tomcat" includeEmptyDirs="true"
+                           quiet="yes" />
+                        <copy todir="${project.build.directory}/vk-tomcat" verbose="false" overwrite="true">
+                           <fileset dir="${tomcat.distrib}" />
+                        </copy>
+                        <copy todir="${project.build.directory}/vk-tomcat/" verbose="true" overwrite="true">
+                           <fileset dir="${basedir}/src/main/resources">
+                              <exclude name="**/*.war" />
+                           </fileset>
+                        </copy>
+                        <copy todir="${project.build.directory}/vk-tomcat/webapps/" verbose="true"
+                           flatten="true" overwrite="true">
+                           <fileset dir="${project.build.directory}/lib-vk-standalone-tomcat-resources.dir/"
+                              casesensitive="yes">
+                              <include name="**/*.war" />
+                           </fileset>
+                           <mapper>
+                              <chainedmapper>
+                                 <flattenmapper />
+                                 <mergemapper from="vk-java-login-server-war-*.war" to="vk.war"/>
+                              </chainedmapper>
+                           </mapper>
+                        </copy>
+                     </tasks>
+                  </configuration>
+                  <executions>
+                     <execution>
+                        <phase>install</phase>
+                        <goals>
+                           <goal>run</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
+</project>
