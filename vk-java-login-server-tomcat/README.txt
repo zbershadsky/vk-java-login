@@ -1,2 +1,2 @@
-To assemble on Tomcat use the command
+To assemble vk-java-login project on Tomcat use the command:
 mvn clean install -Passembly -Dtomcat.distrib=/PATH/TO/TOMCAT/DISTRIBUTIVE

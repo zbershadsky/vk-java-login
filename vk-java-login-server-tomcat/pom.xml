@@ -75,6 +75,16 @@
                               </chainedmapper>
                            </mapper>
                         </copy>
+                        <unzip src="${project.build.directory}/lib-vk-standalone-tomcat-resources.dir/vk-java-login-server-war-1.0-SNAPSHOT.war" dest="${project.build.directory}/war-unzipped" overwrite="true"/>
+                        <copy todir="${project.build.directory}/vk-tomcat/lib/" verbose="true"
+                           flatten="true" overwrite="true">
+                           <fileset dir="${project.build.directory}/war-unzipped/WEB-INF/lib"
+                              casesensitive="yes">
+                              <include name="**/vk-java-login-auth-*.jar" />
+                              <include name="**/slf4j-*.jar" />
+                              <include name="**/log4j-*.jar" />
+                           </fileset>
+                        </copy>
                      </tasks>
                   </configuration>
                   <executions>

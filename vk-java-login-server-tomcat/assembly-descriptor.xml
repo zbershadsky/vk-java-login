@@ -4,7 +4,7 @@
     <format>dir</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
-    
+
   <fileSets>
     <fileSet>
       <directory>target/classes</directory>
@@ -17,11 +17,9 @@
       <unpack>false</unpack>
       <scope>runtime</scope>
       <outputDirectory>/</outputDirectory>
-
       <includes>
         <include>org.vk-java-login:vk-java-login-server-war</include>
       </includes>
-
     </dependencySet>
   </dependencySets>
 
