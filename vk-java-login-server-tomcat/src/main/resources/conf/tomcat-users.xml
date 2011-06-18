@@ -19,6 +19,6 @@
 <!-- xCMIS users -->
   <role rolename="users"/>
   <role rolename="administrators"/>
-  <user username="root" password="exo" roles="users,administrators"/>
+  <user username="root" password="root" roles="users,administrators"/>
   <user username="vk" password="vk" roles="users"/>
 </tomcat-users>
