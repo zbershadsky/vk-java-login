@@ -1,7 +1,7 @@
 #!/bin/sh
 # Build and run the vk-java-login tomcat.
 
-#mvn clean install -Passembly
+mvn clean install -Passembly
 
 rm -rf ./target/war-unzipped
 
