@@ -512,7 +512,7 @@
    <modules>
       <module>vk-java-login-auth</module>
       <module>vk-java-login-server-war</module>
-      <module>vk-java-login-server-tomcat</module>
+      <!-- module>vk-java-login-server-tomcat</module -->
    </modules>
    <prerequisites>
       <maven>2.2.0</maven>
