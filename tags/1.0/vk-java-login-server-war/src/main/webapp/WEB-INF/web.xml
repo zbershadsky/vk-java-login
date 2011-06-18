@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+   <display-name>vk Application</display-name>
+
+   <filter>
+      <filter-name>VkFilter</filter-name>
+      <filter-class>org.zav.server.VkFilter</filter-class>
+   </filter>
+
+   <filter-mapping>
+      <filter-name>VkFilter</filter-name>
+      <url-pattern>/vk/private/*</url-pattern>
+   </filter-mapping>
+
+   <servlet>
+      <servlet-name>VkServlet</servlet-name>
+      <servlet-class>org.zav.server.VkServlet</servlet-class>
+   </servlet>
+
+   <servlet-mapping>
+      <servlet-name>VkServlet</servlet-name>
+      <url-pattern>/vk/private/*</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>VkServlet</servlet-name>
+      <url-pattern>/vk/*</url-pattern>
+   </servlet-mapping>
+
+   <security-constraint>
+      <web-resource-collection>
+         <web-resource-name>vk Application</web-resource-name>
+         <url-pattern>/vk/private/*</url-pattern>
+      </web-resource-collection>
+      <auth-constraint>
+         <role-name>administrators</role-name>
+         <role-name>users</role-name>
+      </auth-constraint>
+   </security-constraint>
+
+   <login-config>
+      <auth-method>BASIC</auth-method>
+      <realm-name>vk-realm</realm-name>
+   </login-config>
+
+   <security-role>
+      <role-name>users</role-name>
+   </security-role>
+   <security-role>
+      <role-name>administrators</role-name>
+   </security-role>
+
+</web-app>

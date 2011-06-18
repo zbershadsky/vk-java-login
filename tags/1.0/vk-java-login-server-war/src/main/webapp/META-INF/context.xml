@@ -1,0 +1,4 @@
+<Context path="/vk" docBase="vk" reloadable="true">
+   <Valve className="org.zav.auth.VkAuthentificatorValve" />
+   <Loader delegate="true"/>
+</Context>
